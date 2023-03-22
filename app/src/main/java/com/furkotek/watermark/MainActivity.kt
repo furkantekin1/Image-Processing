@@ -1,6 +1,8 @@
 package com.furkotek.watermark
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,7 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
+class   MainActivity : AppCompatActivity() {
 
     val IMAGE_ONE = 100
     val IMAGE_TWO = 101
@@ -47,8 +49,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(data != null){
-            var path = Utils.Companion.getPathFromUri(applicationContext, data.data)
-            Toast.makeText(applicationContext, path, Toast.LENGTH_LONG)
+            var bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
+            imgView.setImageBitmap(bitmap)
             when (requestCode){
 
                 IMAGE_ONE -> {
