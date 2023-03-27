@@ -2,9 +2,11 @@ package com.furkotek.watermark
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
-import java.net.URI
+import java.io.File
+import java.io.FileOutputStream
 
 class Utils {
 
@@ -22,6 +24,31 @@ class Utils {
             }
 
             return res
+        }
+
+        fun saveImageToFile(img: Bitmap, dest: String) : File? {
+            var out : FileOutputStream
+            try {
+                var f : File = File(dest)
+                out = FileOutputStream(f)
+                img.compress(Bitmap.CompressFormat.PNG, 100, out)
+                out.flush()
+                out.close()
+                return f
+            } catch (e : Exception){
+                e.printStackTrace()
+                return null
+            }
+        }
+
+        fun getImagePath () : String {
+            var f: File = File("/data/data/" + BuildConfig.APPLICATION_ID + "/files")
+            if (!f.exists())
+                f.mkdir()
+            return "/data/data/" + BuildConfig.APPLICATION_ID + "/files"
+        }
+        fun tempImagePath () : String {
+            return getImagePath() + "/" + Global.Companion.imageName
         }
     }
 }

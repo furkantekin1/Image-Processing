@@ -12,7 +12,7 @@ import android.widget.Toast
 
 class MainScreen : AppCompatActivity() {
 
-    final val IMAGE_SELECT : Int = 100
+    val IMAGE_SELECT : Int = 100
 
     lateinit var imgView : ImageView
     lateinit var btnOpacity : Button
@@ -46,11 +46,8 @@ class MainScreen : AppCompatActivity() {
         if(data != null){
             var bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
             imgView.setImageBitmap(bitmap)
-            when (requestCode){
-                IMAGE_SELECT -> {
+            Utils.Companion.saveImageToFile(bitmap, Utils.Companion.tempImagePath())
 
-                }
-            }
         } else {
             Toast.makeText(applicationContext, "Request Cancelled By User", Toast.LENGTH_SHORT).show()
 
