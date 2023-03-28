@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.fragment.app.Fragment
 import java.io.File
 import java.io.FileOutputStream
 
@@ -49,6 +50,11 @@ class Utils {
         }
         fun tempImagePath () : String {
             return getImagePath() + "/" + Global.Companion.imageName
+        }
+        fun changeFragment (fragment: Fragment, prevFragment: Fragment) {
+            val fragTransaction = prevFragment.requireActivity().supportFragmentManager.beginTransaction()
+            fragTransaction.replace(R.id.fragmentHolder, fragment)
+            fragTransaction.commit()
         }
     }
 }

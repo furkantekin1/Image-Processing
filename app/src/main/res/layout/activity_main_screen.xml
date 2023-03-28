@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -26,39 +26,12 @@
             app:srcCompat="@drawable/img_empty" />
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fragmentHolder"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight=".5"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
-        <Button
-            android:id="@+id/btn_resize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button"
-            android:text="@string/btn_resize" />
 
-        <Button
-            android:id="@+id/btn_opacity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button"
-            android:text="@string/btn_transparent" />
-
-        <Button
-            android:id="@+id/btn_compress"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button"
-            android:text="@string/btn_compress" />
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
