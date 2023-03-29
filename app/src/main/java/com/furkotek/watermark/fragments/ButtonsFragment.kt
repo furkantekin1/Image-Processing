@@ -1,16 +1,11 @@
 package com.furkotek.watermark.fragments
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.lifecycle.Lifecycle
-import com.furkotek.watermark.MainActivity
-import com.furkotek.watermark.MainScreen
 import com.furkotek.watermark.R
 import com.furkotek.watermark.Utils
 
