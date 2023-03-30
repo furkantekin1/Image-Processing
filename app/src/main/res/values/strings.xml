@@ -3,6 +3,4 @@
     <string name="btn_transparent">Opacity</string>
     <string name="btn_compress">Compress</string>
     <string name="btn_resize">Resize</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
