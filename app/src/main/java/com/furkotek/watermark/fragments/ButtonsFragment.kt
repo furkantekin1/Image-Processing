@@ -18,14 +18,9 @@ class ButtonsFragment : Fragment() {
     lateinit var btnOpacity : Button
     lateinit var btnResize : Button
     lateinit var btnCompress : Button
-
     lateinit var viewModelDatas: ImagePropertiesViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        var view: View =  inflater.inflate(R.layout.fragment_buttons, container, false)
+    fun initFragment(view: View){
         btnOpacity =  view.findViewById(R.id.btn_opacity)
         btnCompress = view.findViewById(R.id.btn_compress)
         btnResize = view.findViewById(R.id.btn_resize)
@@ -37,6 +32,12 @@ class ButtonsFragment : Fragment() {
         viewModelDatas.isImageSelectedData.observe(requireActivity(), Observer { data ->
             setButtonsStatus(data)
         })
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var view: View =  inflater.inflate(R.layout.fragment_buttons, container, false)
+        initFragment(view)
         return view
     }
 

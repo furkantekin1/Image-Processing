@@ -16,7 +16,11 @@
     </style>
     <style name="ButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textAllCaps">false</item>
+    </style>
 
+    <style name="TxtStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:color">@color/textview_custom_color</item>
+        <item name="android:textSize">18dp</item>
     </style>
 
 </resources>

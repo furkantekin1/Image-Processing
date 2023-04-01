@@ -17,11 +17,8 @@ class OpacityFragment : Fragment() {
     lateinit var seekBar: SeekBar;
     lateinit var imageview: ImageView
     lateinit var imagePropertiesVM : ImagePropertiesViewModel
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        var view: View = inflater.inflate(R.layout.fragment_opacity, container, false)
+
+    fun initFragment(view: View){
         imagePropertiesVM = ViewModelProvider(requireActivity())[ImagePropertiesViewModel::class.java]
         imageview = view.findViewById(R.id.img_back)
         seekBar = view.findViewById(R.id.seekBar)
@@ -35,20 +32,20 @@ class OpacityFragment : Fragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
+
             }
 
         })
         imageview.setOnClickListener(View.OnClickListener {
             Utils.Companion.changeFragment(ButtonsFragment(), this)
         })
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var view: View = inflater.inflate(R.layout.fragment_opacity, container, false)
+        initFragment(view)
         return view
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

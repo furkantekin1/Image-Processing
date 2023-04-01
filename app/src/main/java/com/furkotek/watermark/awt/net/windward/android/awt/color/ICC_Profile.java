@@ -655,7 +655,7 @@ public class ICC_Profile implements Serializable {
             throw new IllegalArgumentException(Messages.getString("awt.162")); //$NON-NLS-1$
         }
 
-      if (System.getProperty("os.name").toLowerCase().indexOf("windows") >= 0) { //$NON-NLS-1$ //$NON-NLS-2$
+      if (System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0) { //$NON-NLS-1$ //$NON-NLS-2$
         try {
             if ( res.getColorSpaceType () == ColorSpace.TYPE_RGB &&
                  res.getDataSize(icSigMediaWhitePointTag) > 0 &&

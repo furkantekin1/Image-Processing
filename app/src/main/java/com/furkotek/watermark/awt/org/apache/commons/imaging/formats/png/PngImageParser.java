@@ -549,23 +549,23 @@ public class PngImageParser extends ImageParser {
         {
             final List<PngChunk> sRGBs = filterChunks(chunks, ChunkType.sRGB);
             final List<PngChunk> gAMAs = filterChunks(chunks, ChunkType.gAMA);
-            final List<PngChunk> iCCPs = filterChunks(chunks, ChunkType.iCCP);
+            //final List<PngChunk> iCCPs = filterChunks(chunks, ChunkType.iCCP);
             if (sRGBs.size() > 1) {
                 throw new ImageReadException("PNG: unexpected sRGB chunk");
             }
             if (gAMAs.size() > 1) {
                 throw new ImageReadException("PNG: unexpected gAMA chunk");
             }
-            if (iCCPs.size() > 1) {
+            /*if (iCCPs.size() > 1) {
                 throw new ImageReadException("PNG: unexpected iCCP chunk");
-            }
+            }*/
 
             if (sRGBs.size() == 1) {
                 // no color management neccesary.
                 if (getDebug()) {
                     System.out.println("sRGB, no color management neccesary.");
                 }
-            } else if (iCCPs.size() == 1) {
+            } /*else if (iCCPs.size() == 1) {
                 if (getDebug()) {
                     System.out.println("iCCP.");
                 }
@@ -574,7 +574,7 @@ public class PngImageParser extends ImageParser {
                 final byte[] bytes = pngChunkiCCP.uncompressedProfile;
 
                 iccProfile = ICC_Profile.getInstance(bytes);
-            } else if (gAMAs.size() == 1) {
+            }*/ else if (gAMAs.size() == 1) {
                 final PngChunkGama pngChunkgAMA = (PngChunkGama) gAMAs.get(0);
                 final double gamma = pngChunkgAMA.getGamma();
 

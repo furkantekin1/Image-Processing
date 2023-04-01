@@ -3,4 +3,11 @@
     <string name="btn_transparent">Opacity</string>
     <string name="btn_compress">Compress</string>
     <string name="btn_resize">Resize</string>
+    <string name="save_image_question">Are you want save this image?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="delete_image_question">Are you sure discard all changes and delete this image?</string>
 </resources>

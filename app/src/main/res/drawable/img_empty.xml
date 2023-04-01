@@ -5,13 +5,13 @@
         <shape android:shape="rectangle" >
             <solid android:color="@color/transparent"></solid>
             <corners android:radius="20dp"></corners>
-            <stroke android:color="@android:color/darker_gray" android:width="3dp"></stroke>
+            <stroke android:color="@color/black" android:width="3dp"></stroke>
         </shape>
     </item>
     <item android:gravity="center"
         android:width="48dp"
         android:height="48dp"
-        android:drawable="@drawable/addimage">
+        android:drawable="@drawable/add_image">
 
     </item>
 
