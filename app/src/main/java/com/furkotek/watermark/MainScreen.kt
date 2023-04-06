@@ -118,8 +118,10 @@ class MainScreen : AppCompatActivity() {
         var sourceImg = ImageIO.read(File(Utils.tempImagePath()))
         var resultImg = BufferedImage(sourceImg.width, sourceImg.height, BufferedImage.TYPE_INT_ARGB)
         var g = resultImg.createGraphics()
-        g.drawImage(sourceImg,0,0, Color.WHITE,null)
-        g.composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity)
+        g.drawImage(sourceImg, 0, 0, Color.WHITE, null)
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f - (imagePropertiesVM.opacityData.value!!.toFloat() / 255f)));
+        g.color = Color.WHITE
+        g.fillRect(0,0,sourceImg.width, sourceImg.height)
         g.dispose()
         return resultImg
 
@@ -146,5 +148,7 @@ class MainScreen : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+
 
 }
