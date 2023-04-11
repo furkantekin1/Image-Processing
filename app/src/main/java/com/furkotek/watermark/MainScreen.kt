@@ -29,6 +29,7 @@ class MainScreen : AppCompatActivity() {
     lateinit var txtDelete: TextView
     lateinit var imagePropertiesVM: ImagePropertiesViewModel
     var dialog: AlertDialog.Builder? = null
+
     fun init() {
         imgView = findViewById(R.id.img_selected)
         txtSave = findViewById(R.id.txtSave)
@@ -36,8 +37,8 @@ class MainScreen : AppCompatActivity() {
         selectIntent.setAction(Intent.ACTION_GET_CONTENT)
         selectIntent.setType("image/*")
 
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, ButtonsFragment())
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, ButtonsFragment()).commit()
+
         imgView.setOnClickListener(View.OnClickListener {
             startActivityForResult(
                 Intent.createChooser(selectIntent, "Select Image File"),
@@ -46,10 +47,12 @@ class MainScreen : AppCompatActivity() {
 
         })
         txtSave.setOnClickListener(View.OnClickListener {
-            saveImage()
+            //Global.Companion.showDialog(this)
+            imageOp(ImageOperation.SAVE)
         })
         txtDelete.setOnClickListener() {
-            deleteImage()
+            //Global.Companion.showDialog(this)
+            imageOp(ImageOperation.DELETE)
         }
         imagePropertiesVM = ViewModelProvider(this)[ImagePropertiesViewModel::class.java]
         imagePropertiesVM.opacityData.observe(this, Observer { opacity ->
@@ -76,6 +79,7 @@ class MainScreen : AppCompatActivity() {
                 txtSave.isEnabled = false
                 supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, ButtonsFragment())
                     .commit()
+                Global.Companion.closeDialog()
             }
         }
 
@@ -89,32 +93,27 @@ class MainScreen : AppCompatActivity() {
         init()
     }
 
-    fun saveImage() {
+    fun imageOp(op: ImageOperation){
         if (dialog == null)
             dialog = AlertDialog.Builder(this)
-        dialog!!.setMessage(getString(R.string.save_image_question))
+        if (op == ImageOperation.SAVE)
+            dialog!!.setMessage(getString(R.string.save_image_question))
+        else if (op == ImageOperation.DELETE)
+            dialog!!.setMessage(getString(R.string.delete_image_question))
         dialog!!.setPositiveButton(R.string.yes) { _, _ ->
-            Utils.saveImageToDevice(prepareImageToSave())
+            if (op == ImageOperation.SAVE){
+                Utils.saveImageToDevice(prepareImageToSave())
+            }
             imagePropertiesVM.isImageSelectedData.value = false
         }
         dialog!!.setNegativeButton(R.string.no, null)
         dialog!!.show()
 
-    }
 
-    fun deleteImage() {
-        if (dialog == null)
-            dialog = AlertDialog.Builder(this)
-        dialog!!.setMessage(R.string.delete_image_question)
-        dialog!!.setPositiveButton(R.string.yes) { _, _ ->
-            imagePropertiesVM.isImageSelectedData.value = false
-        }
-        dialog!!.setNegativeButton(R.string.no, null)
-        dialog!!.show()
     }
 
     fun prepareImageToSave(): BufferedImage {
-        val opacity = 0.5f
+
         var sourceImg = ImageIO.read(File(Utils.tempImagePath()))
         var resultImg = BufferedImage(sourceImg.width, sourceImg.height, BufferedImage.TYPE_INT_ARGB)
         var g = resultImg.createGraphics()
@@ -149,6 +148,10 @@ class MainScreen : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    enum class ImageOperation(i: Int) {
+        SAVE(1),
+        DELETE(2)
 
+    }
 
 }
