@@ -13,8 +13,8 @@ class Global {
         var dialog: Dialog? = null
 
 
-        fun showDialog(ctx: Context){
 
+        fun showDialog(ctx: Context){
             if(dialog == null)
                 dialog = Dialog(ctx)
             if (!dialog!!.isShowing){
