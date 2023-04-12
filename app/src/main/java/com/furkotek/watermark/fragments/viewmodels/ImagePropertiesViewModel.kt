@@ -14,4 +14,5 @@ class ImagePropertiesViewModel : ViewModel() {
         isImageSelectedData.value = false
         isAnyDataChanged.value = false
     }
+
 }

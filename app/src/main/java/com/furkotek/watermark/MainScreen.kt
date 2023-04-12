@@ -80,14 +80,18 @@ class MainScreen : AppCompatActivity() {
         else if (op == ImageOperation.DELETE)
             dialog!!.setMessage(getString(R.string.delete_image_question))
         dialog!!.setPositiveButton(R.string.yes) { _, _ ->
-            if (op == ImageOperation.SAVE) {
-                globalVM.isShowLoading.value = true
-                CoroutineScope(Dispatchers.Main).launch (Dispatchers.Main)  {
-
-                    Utils.saveImageToDevice(prepareImageToSave())
+            when(op){
+                ImageOperation.SAVE->{
+                    globalVM.isShowLoading.value = true
+                    CoroutineScope(Dispatchers.IO).launch (Dispatchers.IO)  {
+                        Utils.saveImageToDevice(prepareImageToSave())
+                        imagePropertiesVM.isImageSelectedData.postValue(false)
+                        globalVM.isShowLoading.postValue(false)
+                    }
                 }
+                ImageOperation.DELETE->
+                    imagePropertiesVM.isImageSelectedData.postValue(false)
 
-                imagePropertiesVM.isImageSelectedData.value = false
             }
         }
         dialog!!.setNegativeButton(R.string.no, null)
@@ -113,7 +117,6 @@ class MainScreen : AppCompatActivity() {
         g.color = Color.WHITE
         g.fillRect(0, 0, sourceImg.width, sourceImg.height)
         g.dispose()
-        globalVM.isShowLoading.value = false
         return resultImg
 
     }
