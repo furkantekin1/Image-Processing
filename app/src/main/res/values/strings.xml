@@ -11,5 +11,7 @@
     <string name="delete">Delete</string>
     <string name="width">Width</string>
     <string name="height">Height</string>
+    <string name="confirm">Confirm</string>
+    <string name="reset">Reset</string>
     <string name="delete_image_question">Are you sure discard all changes and delete this image?</string>
 </resources>

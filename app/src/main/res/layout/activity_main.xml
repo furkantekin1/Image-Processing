@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="50dp"
+        android:scaleType="fitXY"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

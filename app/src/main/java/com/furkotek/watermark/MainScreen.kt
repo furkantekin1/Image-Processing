@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.scale
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,8 @@ class MainScreen : AppCompatActivity() {
     lateinit var imagePropertiesVM: ImagePropertiesViewModel
     lateinit var globalVM: GlobalViewModel
     var dialog: AlertDialog.Builder? = null
+    var originalBitmap: Bitmap? = null
+    var tempBitmap: Bitmap? = null
 
     fun init() {
         imgView = findViewById(R.id.img_selected)
@@ -120,15 +123,14 @@ class MainScreen : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (data != null) {
             try {
-                var bitmap: Bitmap =
+                originalBitmap =
                     BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
-                imgView.setImageBitmap(bitmap)
-                Utils.Companion.saveImageToFile(bitmap, Utils.Companion.tempImagePath())
-                var map: HashMap<String,Int> = HashMap()
-                map.put("width", bitmap.width)
-                map.put("height", bitmap.height)
-                imagePropertiesVM.imageSizeData.postValue(map)
-                imagePropertiesVM.isImageSelectedData.value = true
+                imgView.setImageBitmap(originalBitmap)
+                Utils.Companion.saveImageToFile(originalBitmap!!, Utils.Companion.tempImagePath())
+                Global.Companion.sizeDefault.put("width", originalBitmap!!.width)
+                Global.Companion.sizeDefault.put("height", originalBitmap!!.height)
+                imagePropertiesVM.imageSizeData.value = Global.Companion.sizeDefault
+                    imagePropertiesVM.isImageSelectedData.value = true
             } catch (e: Exception) {
                 Toast.makeText(
                     applicationContext,
@@ -175,6 +177,14 @@ class MainScreen : AppCompatActivity() {
                     .commit()
             }
         }
+        imagePropertiesVM.imageSizeData.observe(this){ data ->
+            if (imagePropertiesVM.isImageSelectedData.value!!) {
+                tempBitmap = Bitmap.createScaledBitmap(originalBitmap!!, data["width"]!!, data["height"]!!, false)
+                imgView.setImageBitmap(tempBitmap)
+
+            }
+        }
+
         globalVM.isShowLoading.observe(this){data ->
             if (data)
                 Global.Companion.showDialog(this)

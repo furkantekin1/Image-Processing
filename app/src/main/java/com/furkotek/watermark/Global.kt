@@ -10,6 +10,7 @@ class Global {
     companion object {
         val imageName : String = "temp_img"
         val opacityDefault = 255
+        val sizeDefault = HashMap<String, Int>()
         var dialog: Dialog? = null
 
 
