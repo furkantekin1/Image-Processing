@@ -9,5 +9,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="width">Width</string>
+    <string name="height">Height</string>
     <string name="delete_image_question">Are you sure discard all changes and delete this image?</string>
 </resources>

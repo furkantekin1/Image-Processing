@@ -59,17 +59,13 @@ class MainScreen : AppCompatActivity() {
         txtDelete.setOnClickListener() {
             imageOp(ImageOperation.DELETE)
         }
-        imagePropertiesVM = ViewModelProvider(this)[ImagePropertiesViewModel::class.java]
-        globalVM = ViewModelProvider(this)[GlobalViewModel::class.java]
-        initObservers()
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
         init()
+        initObservers()
     }
 
     fun imageOp(op: ImageOperation) {
@@ -101,7 +97,7 @@ class MainScreen : AppCompatActivity() {
     }
 
 
-    suspend fun prepareImageToSave(): BufferedImage {
+    fun prepareImageToSave(): BufferedImage {
 
         var sourceImg = ImageIO.read(File(Utils.tempImagePath()))
         var resultImg =
@@ -128,6 +124,10 @@ class MainScreen : AppCompatActivity() {
                     BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
                 imgView.setImageBitmap(bitmap)
                 Utils.Companion.saveImageToFile(bitmap, Utils.Companion.tempImagePath())
+                var map: HashMap<String,Int> = HashMap()
+                map.put("width", bitmap.width)
+                map.put("height", bitmap.height)
+                imagePropertiesVM.imageSizeData.postValue(map)
                 imagePropertiesVM.isImageSelectedData.value = true
             } catch (e: Exception) {
                 Toast.makeText(
@@ -144,6 +144,9 @@ class MainScreen : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
     fun initObservers(){
+        imagePropertiesVM = ViewModelProvider(this)[ImagePropertiesViewModel::class.java]
+        globalVM = ViewModelProvider(this)[GlobalViewModel::class.java]
+
         imagePropertiesVM.opacityData.observe(this, Observer { opacity ->
             imgView.imageAlpha = opacity
             if (imagePropertiesVM.isImageSelectedData.value!!) {
@@ -183,7 +186,6 @@ class MainScreen : AppCompatActivity() {
     enum class ImageOperation(i: Int) {
         SAVE(1),
         DELETE(2)
-
     }
 
 }

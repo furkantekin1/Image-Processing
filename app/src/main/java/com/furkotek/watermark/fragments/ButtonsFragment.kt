@@ -29,6 +29,9 @@ class ButtonsFragment : Fragment() {
         btnOpacity.setOnClickListener {
             Utils.Companion.changeFragment(OpacityFragment(), this)
         }
+        btnResize.setOnClickListener {
+            Utils.Companion.changeFragment(ResizeFragment(), this)
+        }
         viewModelDatas.isImageSelectedData.observe(requireActivity(), Observer { data ->
             setButtonsStatus(data)
         })

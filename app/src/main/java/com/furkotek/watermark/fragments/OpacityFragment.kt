@@ -15,12 +15,12 @@ import com.furkotek.watermark.fragments.viewmodels.ImagePropertiesViewModel
 class OpacityFragment : Fragment() {
 
     lateinit var seekBar: SeekBar;
-    lateinit var imageview: ImageView
+    lateinit var imgBack: ImageView
     lateinit var imagePropertiesVM : ImagePropertiesViewModel
 
     fun initFragment(view: View){
         imagePropertiesVM = ViewModelProvider(requireActivity())[ImagePropertiesViewModel::class.java]
-        imageview = view.findViewById(R.id.img_back)
+        imgBack = view.findViewById(R.id.img_back)
         seekBar = view.findViewById(R.id.seekBar)
         seekBar.setProgress(imagePropertiesVM.opacityData.value!!, false)
         seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
@@ -36,7 +36,7 @@ class OpacityFragment : Fragment() {
             }
 
         })
-        imageview.setOnClickListener(View.OnClickListener {
+        imgBack.setOnClickListener(View.OnClickListener {
             Utils.Companion.changeFragment(ButtonsFragment(), this)
         })
     }
