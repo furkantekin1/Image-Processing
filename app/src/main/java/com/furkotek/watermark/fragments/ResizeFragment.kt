@@ -37,7 +37,7 @@ class ResizeFragment : Fragment() {
         txtHeight.inputType =
             InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
         imagePropertiesVM = ViewModelProvider(requireActivity())[ImagePropertiesViewModel::class.java]
-        map = imagePropertiesVM.imageSizeData.value!!
+        map = imagePropertiesVM.imageSizeData.value!!.clone() as HashMap<String, Int>
         txtWidth.setText(map["width"].toString())
         txtHeight.setText(map["height"].toString())
         imgBack.setOnClickListener {

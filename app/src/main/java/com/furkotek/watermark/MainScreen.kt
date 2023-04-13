@@ -123,14 +123,13 @@ class MainScreen : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (data != null) {
             try {
-                originalBitmap =
-                    BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
+                originalBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.data!!))
                 imgView.setImageBitmap(originalBitmap)
                 Utils.Companion.saveImageToFile(originalBitmap!!, Utils.Companion.tempImagePath())
                 Global.Companion.sizeDefault.put("width", originalBitmap!!.width)
                 Global.Companion.sizeDefault.put("height", originalBitmap!!.height)
                 imagePropertiesVM.imageSizeData.value = Global.Companion.sizeDefault
-                    imagePropertiesVM.isImageSelectedData.value = true
+
             } catch (e: Exception) {
                 Toast.makeText(
                     applicationContext,
@@ -172,16 +171,17 @@ class MainScreen : AppCompatActivity() {
                 imagePropertiesVM.opacityData.value = Global.opacityDefault
                 imagePropertiesVM.isAnyDataChanged.value = false
                 txtSave.isEnabled = false
+                imagePropertiesVM.imageSizeData.value = null
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentHolder, ButtonsFragment())
                     .commit()
             }
         }
         imagePropertiesVM.imageSizeData.observe(this){ data ->
-            if (imagePropertiesVM.isImageSelectedData.value!!) {
+            if(data!=null){
+                imagePropertiesVM.isImageSelectedData.value = true
                 tempBitmap = Bitmap.createScaledBitmap(originalBitmap!!, data["width"]!!, data["height"]!!, false)
                 imgView.setImageBitmap(tempBitmap)
-
             }
         }
 
