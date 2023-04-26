@@ -151,13 +151,13 @@ class MainScreen : AppCompatActivity() {
         imagePropertiesVM.opacityData.observe(this, Observer { opacity ->
             imgView.imageAlpha = opacity
             if (imagePropertiesVM.isImageSelectedData.value!!) {
-                if (Global.opacityDefault != opacity) imagePropertiesVM.isAnyDataChanged.value =
-                    true
+                imagePropertiesVM.isAnyDataChanged.value = true
             }
         })
         imagePropertiesVM.isAnyDataChanged.observe(this) { data ->
             if (imagePropertiesVM.isImageSelectedData.value!!) {
-                txtSave.isEnabled = data
+                txtSave.isEnabled = checkImageForAnyChange();
+
             }
 
         }
@@ -179,10 +179,12 @@ class MainScreen : AppCompatActivity() {
         }
         imagePropertiesVM.imageSizeData.observe(this){ data ->
             if(data!=null){
+                imagePropertiesVM.isAnyDataChanged.value = true
                 imagePropertiesVM.isImageSelectedData.value = true
                 tempBitmap = Bitmap.createScaledBitmap(originalBitmap!!, data["width"]!!, data["height"]!!, false)
                 imgView.setImageBitmap(tempBitmap)
             }
+
         }
 
         globalVM.isShowLoading.observe(this){data ->
@@ -192,6 +194,10 @@ class MainScreen : AppCompatActivity() {
                 Global.Companion.closeDialog()
         }
 
+    }
+    fun checkImageForAnyChange() : Boolean {
+        if(imagePropertiesVM.opacityData.value == Global.opacityDefault && imagePropertiesVM.imageSizeData.value!!.equals(Global.sizeDefault)) return false;
+        return true;
     }
     enum class ImageOperation(i: Int) {
         SAVE(1),
